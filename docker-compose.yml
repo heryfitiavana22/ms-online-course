@@ -1,0 +1,48 @@
+version: '3.8'
+
+name: ms-online-course-dev
+
+services:
+  gateway:
+    build:
+      context: ./gateway
+      target: dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./gateway:/app
+      - ../.env:/app/.env
+
+  course:
+    build:
+      context: ./course
+      target: dev
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./course:/app
+      - ../.env:/app/.env
+
+  enrollment:
+    build:
+      context: ./enrollment
+      target: dev
+    ports:
+      - "3002:3002"
+    volumes:
+      - ./enrollment:/app
+      - ../.env:/app/.env
+
+  user:
+    build:
+      context: ./user
+      target: dev
+    ports:
+      - "3003:3003"
+    volumes:
+      - ./user:/app
+      - ../.env:/app/.env
+
+  
+
+  
