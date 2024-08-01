@@ -11,7 +11,8 @@ services:
       - "3000:3000"
     volumes:
       - ./gateway:/app
-      - ../.env:/app/.env
+    env_file:
+      - .env
 
   course:
     build:
@@ -21,7 +22,8 @@ services:
       - "3001:3001"
     volumes:
       - ./course:/app
-      - ../.env:/app/.env
+    env_file:
+      - .env
 
   enrollment:
     build:
@@ -31,7 +33,8 @@ services:
       - "3002:3002"
     volumes:
       - ./enrollment:/app
-      - ../.env:/app/.env
+    env_file:
+      - .env
 
   user:
     build:
@@ -41,7 +44,8 @@ services:
       - "3003:3003"
     volumes:
       - ./user:/app
-      - ../.env:/app/.env
+    env_file:
+      - .env
 
   
 

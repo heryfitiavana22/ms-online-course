@@ -13,6 +13,7 @@ import { EnrollmentController } from './enrollment/enrollment.controller';
   imports: [
     ConfigModule.forRoot({
       envFilePath: ['../.env', '.env'],
+      ignoreEnvFile: true
     }),
     ClientsModule.register([
       {
