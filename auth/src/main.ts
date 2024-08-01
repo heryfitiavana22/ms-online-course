@@ -1,16 +1,16 @@
 import { NestFactory } from '@nestjs/core';
-import { EnrollmentModule } from './enrollment.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { env } from './config/env';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    EnrollmentModule,
+    AppModule,
     {
       transport: Transport.TCP,
       options: {
-        host: env.ENROLLMENT_SERVICE_HOST,
-        port: env.ENROLLMENT_SERVICE_PORT,
+        host: env.AUTH_SERVICE_HOST,
+        port: env.AUTH_SERVICE_PORT,
       },
     },
   );

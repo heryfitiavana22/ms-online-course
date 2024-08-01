@@ -10,17 +10,38 @@ class EnvironmentVariables {
   @IsString()
   BASE_URI: string;
 
+  @IsString()
+  HOST: string;
+
   @IsInt()
   GATEWAY_PORT: number;
 
   @IsInt()
   ENROLLMENT_SERVICE_PORT: number;
 
+  @IsString()
+  ENROLLMENT_SERVICE_HOST: string;
+
   @IsInt()
   COURSE_SERVICE_PORT: number;
 
+  @IsString()
+  COURSE_SERVICE_HOST: string;
+
   @IsInt()
   USER_SERVICE_PORT: number;
+
+  @IsString()
+  USER_SERVICE_HOST: string;
+
+  @IsInt()
+  AUTH_SERVICE_PORT: number;
+
+  @IsString()
+  AUTH_SERVICE_HOST: string;
+
+  @IsString()
+  JWT_SECRET: string;
 }
 
 export const env = plainToClass(EnvironmentVariables, process.env, {

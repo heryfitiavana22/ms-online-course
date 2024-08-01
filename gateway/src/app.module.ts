@@ -8,19 +8,22 @@ import { SERVICE_NAME } from './config/service.name';
 import { UsersController } from './users/users.controller';
 import { CourseController } from './course/course.controller';
 import { EnrollmentController } from './enrollment/enrollment.controller';
+import { AuthController } from './auth/auth.controller';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthenticatedGuard } from './auth/guard/authenticated.guard';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: ['../.env', '.env'],
-      ignoreEnvFile: true
+      ignoreEnvFile: true,
     }),
     ClientsModule.register([
       {
         name: SERVICE_NAME.USER,
         transport: Transport.TCP,
         options: {
-          host: '127.0.0.1',
+          host: env.USER_SERVICE_HOST,
           port: env.USER_SERVICE_PORT,
         },
       },
@@ -28,7 +31,7 @@ import { EnrollmentController } from './enrollment/enrollment.controller';
         name: SERVICE_NAME.COURSE,
         transport: Transport.TCP,
         options: {
-          host: '127.0.0.1',
+          host: env.COURSE_SERVICE_HOST,
           port: env.COURSE_SERVICE_PORT,
         },
       },
@@ -36,8 +39,16 @@ import { EnrollmentController } from './enrollment/enrollment.controller';
         name: SERVICE_NAME.ENROLLMENT,
         transport: Transport.TCP,
         options: {
-          host: '127.0.0.1',
+          host: env.ENROLLMENT_SERVICE_HOST,
           port: env.ENROLLMENT_SERVICE_PORT,
+        },
+      },
+      {
+        name: SERVICE_NAME.AUTH,
+        transport: Transport.TCP,
+        options: {
+          host: env.AUTH_SERVICE_HOST,
+          port: env.AUTH_SERVICE_PORT,
         },
       },
     ]),
@@ -47,7 +58,14 @@ import { EnrollmentController } from './enrollment/enrollment.controller';
     UsersController,
     CourseController,
     EnrollmentController,
+    AuthController,
   ],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthenticatedGuard,
+    },
+  ],
 })
 export class AppModule {}

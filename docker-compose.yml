@@ -47,6 +47,17 @@ services:
     env_file:
       - .env
 
+  auth:
+    build:
+      context: ./auth
+      target: dev
+    ports:
+      - "3004:3004"
+    volumes:
+      - ./auth:/app
+    env_file:
+      - .env
+
   
 
   

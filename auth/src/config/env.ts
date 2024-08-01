@@ -3,10 +3,13 @@ import { validateSync, IsInt, IsString } from 'class-validator';
 
 class EnvironmentVariables {
   @IsInt()
-  USER_SERVICE_PORT: number;
+  AUTH_SERVICE_PORT: number;
 
   @IsString()
-  USER_SERVICE_HOST: string;
+  JWT_SECRET: string;
+
+  @IsString()
+  AUTH_SERVICE_HOST: string;
 }
 
 export const env = plainToClass(EnvironmentVariables, process.env, {
