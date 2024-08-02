@@ -28,6 +28,16 @@ export class EnrollmentController {
     return this.enrollmentService.findOne(id);
   }
 
+  @MessagePattern('findEnrollmentsByUserId')
+  findByUserId(@Payload() userId: string) {
+    return this.enrollmentService.findByUserId(userId);
+  }
+
+  @MessagePattern('findEnrollmentsByCourseId')
+  findByCourseId(@Payload() courseId: string) {
+    return this.enrollmentService.findByCourseId(courseId);
+  }
+
   @MessagePattern('updateEnrollment')
   update(@Payload() updateEnrollmentDto: UpdateEnrollmentDto) {
     return this.enrollmentService.update(

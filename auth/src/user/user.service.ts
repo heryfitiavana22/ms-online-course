@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { RpcException } from '@nestjs/microservices';
 
 @Injectable()
 export class UserService {
@@ -18,7 +19,12 @@ export class UserService {
   ];
 
   async findOne(email: string) {
-    return this.users.find((user) => user.email === email);
+    const users = this.users.find((user) => user.email === email);
+    if (users) return users;
+
+    throw new RpcException(
+      new NotFoundException(`User with email : ${email} not found`),
+    );
   }
 
   create(createUserDto: CreateUserDto) {
