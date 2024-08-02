@@ -7,13 +7,15 @@ import {
   Param,
   Delete,
   Inject,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { SERVICE_NAME } from 'src/config/service.name';
 import { ClientProxy } from '@nestjs/microservices';
+import { seh } from 'src/helper/service-error-handler';
 
-@Controller('course')
+@Controller('courses')
 export class CourseController {
   constructor(
     @Inject(SERVICE_NAME.COURSE)
@@ -22,26 +24,31 @@ export class CourseController {
 
   @Post()
   create(@Body() createCourseDto: CreateCourseDto) {
-    return {};
+    return seh(this.courseServiceClient.send('createCourse', createCourseDto));
   }
 
   @Get()
   findAll() {
-    return this.courseServiceClient.send('findAllCourse', {});
+    return seh(this.courseServiceClient.send('findAllCourse', {}));
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return {};
+    return seh(this.courseServiceClient.send('findOneCourse', id));
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCourseDto: UpdateCourseDto) {
-    return {};
+    return seh(
+      this.courseServiceClient.send('updateCourse', {
+        id,
+        ...updateCourseDto,
+      }),
+    );
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return {};
+    return seh(this.courseServiceClient.send('removeCourse', id));
   }
 }

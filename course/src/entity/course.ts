@@ -1,4 +1,11 @@
-import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsNumber,
+  IsInt,
+  IsArray,
+  IsOptional,
+} from 'class-validator';
 
 export class Course {
   @IsNotEmpty()
@@ -16,4 +23,8 @@ export class Course {
   @IsNotEmpty()
   @IsNumber()
   price: number;
+
+  @IsArray()
+  @IsOptional()
+  tags?: string[];
 }

@@ -12,6 +12,7 @@ import { CreateEnrollmentDto } from './dto/create-enrollment.dto';
 import { UpdateEnrollmentDto } from './dto/update-enrollment.dto';
 import { SERVICE_NAME } from 'src/config/service.name';
 import { ClientProxy } from '@nestjs/microservices';
+import { seh } from 'src/helper/service-error-handler';
 
 @Controller('enrollment')
 export class EnrollmentController {
@@ -22,17 +23,22 @@ export class EnrollmentController {
 
   @Post()
   create(@Body() createEnrollmentDto: CreateEnrollmentDto) {
-    return {};
+    return seh(
+      this.enrollmentServiceClient.send(
+        'createEnrollment',
+        createEnrollmentDto,
+      ),
+    );
   }
 
   @Get()
   findAll() {
-    return this.enrollmentServiceClient.send('findAllEnrollment', {});
+    return seh(this.enrollmentServiceClient.send('findAllEnrollments', {}));
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return {};
+    return seh(this.enrollmentServiceClient.send('findOneEnrollment', id));
   }
 
   @Patch(':id')
@@ -40,11 +46,16 @@ export class EnrollmentController {
     @Param('id') id: string,
     @Body() updateEnrollmentDto: UpdateEnrollmentDto,
   ) {
-    return {};
+    return seh(
+      this.enrollmentServiceClient.send('updateEnrollment', {
+        id,
+        ...updateEnrollmentDto,
+      }),
+    );
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return {};
+    return seh(this.enrollmentServiceClient.send('removeEnrollment', id));
   }
 }

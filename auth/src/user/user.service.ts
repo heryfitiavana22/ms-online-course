@@ -6,13 +6,13 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UserService {
   private readonly users = [
     {
-      id: 1,
-      email: 'john',
+      id: '1',
+      email: 'john@gmail.com',
       password: 'changeme',
     },
     {
-      id: 2,
-      email: 'maria',
+      id: '2',
+      email: 'maria@gmail.com',
       password: 'guess',
     },
   ];

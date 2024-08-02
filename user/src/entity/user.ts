@@ -1,9 +1,21 @@
-import { IsIn, IsInt, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsIn,  IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 export class User {
   @IsNotEmpty()
-  @IsInt()
-  id: number;
+  @IsString()
+  id: string;
+
+  @IsNotEmpty()
+  @IsString()
+  name: string;
+
+  @IsNotEmpty()
+  @IsEmail()
+  email: string;
+
+  @IsNotEmpty()
+  @MinLength(6)
+  password: string;
 
   @IsNotEmpty()
   @IsString()

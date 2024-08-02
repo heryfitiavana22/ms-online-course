@@ -24,7 +24,7 @@ export class CourseController {
   }
 
   @MessagePattern('findOneCourse')
-  findOne(@Payload() id: number) {
+  findOne(@Payload() id: string) {
     return this.courseService.findOne(id);
   }
 
@@ -34,7 +34,7 @@ export class CourseController {
   }
 
   @MessagePattern('removeCourse')
-  remove(@Payload() id: number) {
+  remove(@Payload() id: string) {
     return this.courseService.remove(id);
   }
 }

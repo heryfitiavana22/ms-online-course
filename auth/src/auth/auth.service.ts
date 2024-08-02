@@ -1,7 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '../user/entities/user.entity';
+import { LoginAuthDto } from './dto/login-auth.dto';
+import { RpcException } from '@nestjs/microservices';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +18,14 @@ export class AuthService {
     return null;
   }
 
-  async login(user: User) {
+  async login(loginAuthDto: LoginAuthDto) {
+    const user = await this.validateUser(
+      loginAuthDto.email,
+      loginAuthDto.password,
+    );
+    if (!user)
+      throw new RpcException(new UnauthorizedException('Invalid credentials'));
+
     const payload = { email: user.email, sub: user.id };
 
     return {

@@ -9,8 +9,9 @@ import {
 } from '@nestjs/common';
 import { SERVICE_NAME } from 'src/config/service.name';
 import { ClientProxy } from '@nestjs/microservices';
-import { AuthenticatedGuard } from './guard/authenticated.guard';
 import { Public } from './public.decorator';
+import { LoginAuthDto } from './dto/login-auth.dto';
+import { seh } from 'src/helper/service-error-handler';
 
 @Controller('auth')
 export class AuthController {
@@ -21,11 +22,10 @@ export class AuthController {
 
   @Public()
   @Post('login')
-  async login(@Body() user) {
-    return this.authServiceClient.send('loginAuth', user);
+  async login(@Body() user: LoginAuthDto) {
+    return seh(this.authServiceClient.send('loginAuth', user));
   }
 
-  @UseGuards(AuthenticatedGuard)
   @Get('profile')
   getProfile(@Request() req) {
     return req.user;

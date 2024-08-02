@@ -5,14 +5,22 @@ import { User } from './entity/user';
 
 @Injectable()
 export class UsersService {
-  private users: User[] = [];
+  private users: User[] = [
+    {
+      id: '1',
+      name: 'Hery',
+      email: 'hery@gmail.com',
+      password: 'password',
+      role: 'admin',
+    },
+  ];
 
   getHello(): string {
     return 'Hello from UserService!';
   }
 
   create = (createUserDto: CreateUserDto) => {
-    const newUser = { id: Date.now(), ...createUserDto };
+    const newUser = { id: Date.now().toString(), ...createUserDto };
     this.users.push(newUser);
     return newUser;
   };
@@ -21,22 +29,29 @@ export class UsersService {
     return this.users;
   };
 
-  login = (user: User) => {
-    const payload = { username: "ok", sub: user.id, role: user.role };
-    return {
-      access_token: "okkkk", // TODO
-    };
-  }
-
-  findOne = (id: number) => {
+  findOne = (id: string) => {
     return this.users.find((user) => user.id === id);
   };
 
-  update = (id: number, updateUserDto: UpdateUserDto) => {
-    return `This action updates a #${id} user`;
+  update = (id: string, updateUserDto: UpdateUserDto) => {
+    const courseIndex = this.users.findIndex((course) => course.id == id);
+    if (courseIndex !== -1) {
+      this.users[courseIndex] = {
+        ...this.users[courseIndex],
+        ...updateUserDto,
+      };
+      return this.users[courseIndex];
+    }
+    return null;
   };
 
-  remove = (id: number) => {
-    return `This action removes a #${id} user`;
+  remove = (id: string) => {
+    const courseIndex = this.users.findIndex((course) => course.id === id);
+    if (courseIndex !== -1) {
+      const course = this.users[courseIndex];
+      this.users.splice(courseIndex, 1);
+      return course;
+    }
+    return null;
   };
 }

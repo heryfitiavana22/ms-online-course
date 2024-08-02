@@ -24,7 +24,7 @@ export class EnrollmentController {
   }
 
   @MessagePattern('findOneEnrollment')
-  findOne(@Payload() id: number) {
+  findOne(@Payload() id: string) {
     return this.enrollmentService.findOne(id);
   }
 
@@ -37,7 +37,7 @@ export class EnrollmentController {
   }
 
   @MessagePattern('removeEnrollment')
-  remove(@Payload() id: number) {
+  remove(@Payload() id: string) {
     return this.enrollmentService.remove(id);
   }
 }
