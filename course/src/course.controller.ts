@@ -10,11 +10,6 @@ import { Roles } from './roles/roles.decorator';
 export class CourseController {
   constructor(private readonly courseService: CourseService) {}
 
-  @MessagePattern('getHello')
-  getHello(): string {
-    return this.courseService.getHello();
-  }
-
   @Roles(ROLE.ADMIN, ROLE.INSTRUCTOR)
   @MessagePattern('createCourse')
   create(@Payload('createCourseDto') createCourseDto: CreateCourseDto) {
