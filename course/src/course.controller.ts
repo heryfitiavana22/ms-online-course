@@ -3,6 +3,8 @@ import { CourseService } from './course.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
+import { ROLE } from './roles/role';
+import { Roles } from './roles/roles.decorator';
 
 @Controller('')
 export class CourseController {
@@ -13,8 +15,9 @@ export class CourseController {
     return this.courseService.getHello();
   }
 
+  @Roles(ROLE.ADMIN, ROLE.INSTRUCTOR)
   @MessagePattern('createCourse')
-  create(@Payload() createCourseDto: CreateCourseDto) {
+  create(@Payload('createCourseDto') createCourseDto: CreateCourseDto) {
     return this.courseService.create(createCourseDto);
   }
 
@@ -24,17 +27,19 @@ export class CourseController {
   }
 
   @MessagePattern('findOneCourse')
-  findOne(@Payload() id: string) {
+  findOne(@Payload('id') id: string) {
     return this.courseService.findOne(id);
   }
 
+  @Roles(ROLE.ADMIN, ROLE.INSTRUCTOR)
   @MessagePattern('updateCourse')
-  update(@Payload() updateCourseDto: UpdateCourseDto) {
+  update(@Payload('updateCourseDto') updateCourseDto: UpdateCourseDto) {
     return this.courseService.update(updateCourseDto.id, updateCourseDto);
   }
 
+  @Roles(ROLE.ADMIN, ROLE.INSTRUCTOR)
   @MessagePattern('removeCourse')
-  remove(@Payload() id: string) {
+  remove(@Payload('id') id: string) {
     return this.courseService.remove(id);
   }
 }

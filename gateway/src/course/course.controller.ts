@@ -7,13 +7,11 @@ import {
   Param,
   Delete,
   Inject,
-  ParseIntPipe,
 } from '@nestjs/common';
-import { CreateCourseDto } from './dto/create-course.dto';
-import { UpdateCourseDto } from './dto/update-course.dto';
 import { SERVICE_NAME } from 'src/config/service.name';
 import { ClientProxy } from '@nestjs/microservices';
 import { seh } from 'src/helper/service-error-handler';
+import { User } from 'src/helper/user.decorator';
 
 @Controller('courses')
 export class CourseController {
@@ -23,32 +21,41 @@ export class CourseController {
   ) {}
 
   @Post()
-  create(@Body() createCourseDto: CreateCourseDto) {
-    return seh(this.courseServiceClient.send('createCourse', createCourseDto));
+  create(@Body() createCourseDto: any, @User() user: any) {
+    return seh(
+      this.courseServiceClient.send('createCourse', { createCourseDto, user }),
+    );
   }
 
   @Get()
-  findAll() {
-    return seh(this.courseServiceClient.send('findAllCourse', {}));
+  findAll(@User() user: any) {
+    return seh(this.courseServiceClient.send('findAllCourse', { user }));
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return seh(this.courseServiceClient.send('findOneCourse', id));
+  findOne(@Param('id') id: string, @User() user: any) {
+    return seh(this.courseServiceClient.send('findOneCourse', { id, user }));
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCourseDto: UpdateCourseDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateCourseDto: any,
+    @User() user: any,
+  ) {
     return seh(
       this.courseServiceClient.send('updateCourse', {
-        id,
-        ...updateCourseDto,
+        updateCourseDto: {
+          id,
+          ...updateCourseDto,
+        },
+        user,
       }),
     );
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return seh(this.courseServiceClient.send('removeCourse', id));
+  remove(@Param('id') id: string, @User() user: any) {
+    return seh(this.courseServiceClient.send('removeCourse', { id, user }));
   }
 }

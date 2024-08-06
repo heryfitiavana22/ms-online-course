@@ -22,7 +22,7 @@ export class AuthController {
 
   @Public()
   @Post('login')
-  async login(@Body() user: LoginAuthDto) {
+  async login(@Body() user: any) {    
     return seh(this.authServiceClient.send('loginAuth', user));
   }
 

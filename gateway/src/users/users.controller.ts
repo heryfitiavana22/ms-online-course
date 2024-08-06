@@ -8,8 +8,6 @@ import {
   Delete,
   Inject,
 } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { ClientProxy } from '@nestjs/microservices';
 import { SERVICE_NAME } from 'src/config/service.name';
 import { seh } from 'src/helper/service-error-handler';
@@ -21,7 +19,7 @@ export class UsersController {
   ) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
+  create(@Body() createUserDto: any) {
     return seh(this.userServiceClient.send('createUser', createUserDto));
   }
 
@@ -36,7 +34,7 @@ export class UsersController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  update(@Param('id') id: string, @Body() updateUserDto: any) {
     return seh(
       this.userServiceClient.send('updateUser', {
         id,

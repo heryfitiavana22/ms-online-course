@@ -11,7 +11,7 @@ import {
 import { CreateEnrollmentDto } from './dto/create-enrollment.dto';
 import { UpdateEnrollmentDto } from './dto/update-enrollment.dto';
 import { SERVICE_NAME } from 'src/config/service.name';
-import { ClientProxy, RpcException } from '@nestjs/microservices';
+import { ClientProxy } from '@nestjs/microservices';
 import { seh } from 'src/helper/service-error-handler';
 import { lastValueFrom } from 'rxjs';
 
@@ -41,7 +41,6 @@ export class EnrollmentController {
     const enrollment = await lastValueFrom(
       seh(this.enrollmentClient.send('findOneEnrollment', enrollmentId)),
     );
-
     const user = await lastValueFrom(
       seh(this.userClient.send('findOneUser', enrollment.userId)),
     );

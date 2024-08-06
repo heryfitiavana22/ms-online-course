@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entity/user';
+import { ROLE, User } from './entity/user';
 import { RpcException } from '@nestjs/microservices';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class UsersService {
       name: 'Hery',
       email: 'hery@gmail.com',
       password: 'password',
-      role: 'admin',
+      role: ROLE.ADMIN,
     },
   ];
 
