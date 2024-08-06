@@ -1,8 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateEnrollmentDto } from './dto/create-enrollment.dto';
 import { UpdateEnrollmentDto } from './dto/update-enrollment.dto';
 import { Enrollment } from './entity/enrollment';
-import { RpcException } from '@nestjs/microservices';
+import { rcpExpection } from './helpers/rcp-expection';
 
 @Injectable()
 export class EnrollmentService {
@@ -13,6 +17,17 @@ export class EnrollmentService {
   }
 
   create(createEnrollmentDto: CreateEnrollmentDto) {
+    const existingEnrollment = this.enrollments.find(
+      (enrollment) =>
+        enrollment.userId === createEnrollmentDto.userId &&
+        enrollment.courseId === createEnrollmentDto.courseId,
+    );
+
+    if (existingEnrollment)
+      throw rcpExpection(
+        new BadRequestException('Student is already enrolled in this course'),
+      );
+
     const newEnrollment = { id: Date.now().toString(), ...createEnrollmentDto };
     this.enrollments.push(newEnrollment);
     return newEnrollment;
@@ -26,7 +41,7 @@ export class EnrollmentService {
     const enrollment = this.enrollments.find((course) => course.id === id);
     if (enrollment) return enrollment;
 
-    throw new RpcException(
+    throw rcpExpection(
       new NotFoundException(`Enrollment with id :${id} not found`),
     );
   }

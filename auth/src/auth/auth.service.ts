@@ -3,7 +3,7 @@ import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '../user/entities/user.entity';
 import { LoginAuthDto } from './dto/login-auth.dto';
-import { RpcException } from '@nestjs/microservices';
+import { rcpExpection } from 'src/helpers/rcp-expection';
 
 @Injectable()
 export class AuthService {
@@ -24,7 +24,7 @@ export class AuthService {
       loginAuthDto.password,
     );
     if (!user)
-      throw new RpcException(new UnauthorizedException('Invalid credentials'));
+      throw rcpExpection(new UnauthorizedException('Invalid credentials'));
 
     const payload = { email: user.email, sub: user.id, role: user.role };
 

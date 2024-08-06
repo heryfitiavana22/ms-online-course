@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { Course } from './entity/course';
-import { RpcException } from '@nestjs/microservices';
+import { rcpExpection } from './helpers/rcp-expection';
 
 @Injectable()
 export class CourseService {
@@ -28,7 +28,7 @@ export class CourseService {
     const courses = this.courses.find((course) => course.id === id);
     if (courses) return courses;
 
-    throw new RpcException(
+    throw rcpExpection(
       new NotFoundException(`Course with id : ${id} not found`),
     );
   }

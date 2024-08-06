@@ -8,6 +8,7 @@ import { Reflector } from '@nestjs/core';
 import { ROLE } from './role';
 import { ROLES_KEY } from './roles.decorator';
 import { RpcException } from '@nestjs/microservices';
+import { rcpExpection } from 'src/helpers/rcp-expection';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -21,7 +22,7 @@ export class RolesGuard implements CanActivate {
     const user = data.user;
 
     if (!user)
-      throw new RpcException(
+      throw rcpExpection(
         new BadRequestException(
           'User not found, includes user in payload from "gateway" to "course service"',
         ),
@@ -29,7 +30,7 @@ export class RolesGuard implements CanActivate {
 
     if (roles.includes(user.role)) return true;
 
-    throw new RpcException(
+    throw rcpExpection(
       new BadRequestException(
         'You are not authorized to access this resource.',
       ),

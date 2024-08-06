@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { RpcException } from '@nestjs/microservices';
 import { ROLE, User } from './entities/user.entity';
+import { rcpExpection } from 'src/helpers/rcp-expection';
 
 @Injectable()
 export class UserService {
@@ -29,7 +29,7 @@ export class UserService {
     const users = this.users.find((user) => user.email === email);
     if (users) return users;
 
-    throw new RpcException(
+    throw rcpExpection(
       new NotFoundException(`User with email : ${email} not found`),
     );
   }
