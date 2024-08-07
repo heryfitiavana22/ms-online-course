@@ -8,8 +8,6 @@ import {
   Delete,
   Inject,
 } from '@nestjs/common';
-import { CreateEnrollmentDto } from './dto/create-enrollment.dto';
-import { UpdateEnrollmentDto } from './dto/update-enrollment.dto';
 import { SERVICE_NAME } from 'src/config/service.name';
 import { ClientProxy } from '@nestjs/microservices';
 import { seh } from 'src/helper/service-error-handler';
@@ -25,7 +23,15 @@ export class EnrollmentController {
   ) {}
 
   @Post()
-  create(@Body() createEnrollmentDto: CreateEnrollmentDto) {
+  async create(@Body() createEnrollmentDto: any) {
+    const user = await lastValueFrom(
+      seh(this.userClient.send('findOneUser', createEnrollmentDto.userId)),
+    );
+    const course = await lastValueFrom(
+      seh(
+        this.courseClient.send('findOneCourse', createEnrollmentDto.courseId),
+      ),
+    );
     return seh(
       this.enrollmentClient.send('createEnrollment', createEnrollmentDto),
     );
@@ -74,7 +80,7 @@ export class EnrollmentController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() updateEnrollmentDto: UpdateEnrollmentDto,
+    @Body() updateEnrollmentDto: any,
   ) {
     return seh(
       this.enrollmentClient.send('updateEnrollment', {
