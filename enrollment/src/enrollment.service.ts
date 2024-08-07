@@ -25,7 +25,9 @@ export class EnrollmentService {
 
     if (existingEnrollment)
       throw rcpExpection(
-        new BadRequestException('Student is already enrolled in this course'),
+        new BadRequestException(
+          `Student with id : ${createEnrollmentDto.userId} is already enrolled in this course`,
+        ),
       );
 
     const newEnrollment = { id: Date.now().toString(), ...createEnrollmentDto };

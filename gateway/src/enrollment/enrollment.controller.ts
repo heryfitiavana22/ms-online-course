@@ -32,8 +32,28 @@ export class EnrollmentController {
   }
 
   @Get()
-  findAll() {
-    return seh(this.enrollmentClient.send('findAllEnrollments', {}));
+  async findAll() {
+    const enrollments = await lastValueFrom(
+      seh(this.enrollmentClient.send('findAllEnrollment', {})),
+    );
+
+    const enrichedEnrollments = await Promise.all(
+      enrollments.map(async (enrollment) => {
+        const user = await lastValueFrom(
+          seh(this.userClient.send('findOneUser', enrollment.userId)),
+        );
+        const course = await lastValueFrom(
+          seh(
+            this.courseClient.send('findOneCourse', {
+              id: enrollment.courseId,
+            }),
+          ),
+        );
+
+        return { ...enrollment, user, course };
+      }),
+    );
+    return enrichedEnrollments;
   }
 
   @Get(':id')
@@ -45,7 +65,7 @@ export class EnrollmentController {
       seh(this.userClient.send('findOneUser', enrollment.userId)),
     );
     const course = await lastValueFrom(
-      seh(this.courseClient.send('findOneCourse', enrollment.courseId)),
+      seh(this.courseClient.send('findOneCourse', { id: enrollment.courseId })),
     );
 
     return { ...enrollment, user, course };
