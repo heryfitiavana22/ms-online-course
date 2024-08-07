@@ -10,6 +10,7 @@ import { ClapperBoard } from "@/components/icons/clapper-board";
 import Link from "next/link";
 import { Course } from "@/types/data-type";
 import Money from "../icons/money";
+import { Button } from "../ui/button";
 
 export function CardCourse({ course }: CardCourseProps) {
   return (
@@ -35,12 +36,8 @@ export function CardCourse({ course }: CardCourseProps) {
         </div>
       </CardContent>
       <CardFooter>
-        <Link
-          href="#"
-          className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-          prefetch={false}
-        >
-          Enroll Now
+        <Link href="#" >
+          <Button>Enroll Now</Button>
         </Link>
       </CardFooter>
     </Card>

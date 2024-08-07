@@ -3,8 +3,9 @@ import { Book } from "@/components/icons/book";
 import { CalendarDays } from "@/components/icons/calendar-days";
 import { ClapperBoard } from "@/components/icons/clapper-board";
 import { Container, ContainerTitle } from "@/components/container/container";
-import { CardService } from "./_components/card-service";
 import { CardCourse } from "@/components/card/card-course";
+import { Button } from "@/components/ui/button";
+import { CardService } from "@/components/card/card-service";
 
 export default function Home() {
   return (
@@ -21,19 +22,14 @@ export default function Home() {
               goals.
             </p>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
-              <Link
-                href="#"
-                className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                prefetch={false}
-              >
-                Enroll Now
+              <Link href="#" >
+                <Button>Enroll Now</Button>
               </Link>
               <Link
                 href="#"
-                className="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
-                prefetch={false}
+                
               >
-                Learn More
+                <Button variant="outline">Learn More</Button>
               </Link>
             </div>
           </div>

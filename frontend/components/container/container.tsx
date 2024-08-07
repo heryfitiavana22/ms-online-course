@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ComponentProps } from "react";
+import { ComponentProps, PropsWithChildren } from "react";
 import { H2 } from "../typography/typography";
 
 export function Container({ children, className, ...props }: ContainerProps) {
@@ -15,7 +15,11 @@ export function Container({ children, className, ...props }: ContainerProps) {
 
 type ContainerProps = ComponentProps<"section">;
 
-export function ContainerTitle({ title, description }: ContainerTitleProps) {
+export function ContainerTitle({
+  title,
+  description,
+  children,
+}: ContainerTitleProps) {
   return (
     <div className="flex flex-col items-center justify-center space-y-4 text-center">
       <div className="space-y-2">
@@ -24,11 +28,12 @@ export function ContainerTitle({ title, description }: ContainerTitleProps) {
           {description}
         </p>
       </div>
+      {children}
     </div>
   );
 }
 
-type ContainerTitleProps = {
+type ContainerTitleProps = PropsWithChildren<{
   title: string;
   description: string;
-};
+}>;
