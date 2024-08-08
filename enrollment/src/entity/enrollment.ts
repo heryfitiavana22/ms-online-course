@@ -7,7 +7,7 @@ export class Enrollment {
 
   @IsNotEmpty()
   @IsString()
-  userId: string;
+  studentId: string;
 
   @IsNotEmpty()
   @IsString()

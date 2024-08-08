@@ -24,10 +24,10 @@ export class EnrollmentController {
 
   @Post()
   async create(@Body() createEnrollmentDto: any) {
-    const { userId, courseId } = createEnrollmentDto;
+    const { studentId, courseId } = createEnrollmentDto;
 
-    const user = await lastValueFrom(
-      seh(this.userClient.send('findOneUser', { id: userId })),
+    const student = await lastValueFrom(
+      seh(this.userClient.send('findOneStudent', { id: studentId })),
     );
     const course = await lastValueFrom(
       seh(this.courseClient.send('findOneCourse', { id: courseId })),
@@ -46,7 +46,9 @@ export class EnrollmentController {
     const enrichedEnrollments = await Promise.all(
       enrollments.map(async (enrollment: any) => {
         const user = await lastValueFrom(
-          seh(this.userClient.send('findOneUser', { id: enrollment.userId })),
+          seh(
+            this.userClient.send('findOneStudent', { id: enrollment.studentId }),
+          ),
         );
         const course = await lastValueFrom(
           seh(
@@ -70,7 +72,7 @@ export class EnrollmentController {
       ),
     );
     const user = await lastValueFrom(
-      seh(this.userClient.send('findOneUser', { id: enrollment.userId })),
+      seh(this.userClient.send('findOneStudent', { id: enrollment.studentId })),
     );
     const course = await lastValueFrom(
       seh(this.courseClient.send('findOneCourse', { id: enrollment.courseId })),

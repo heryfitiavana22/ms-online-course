@@ -13,33 +13,35 @@ import { SERVICE_NAME } from 'src/config/service.name';
 import { seh } from 'src/helper/service-error-handler';
 
 @Controller('users')
-export class UsersController {
+export class StudentsController {
   constructor(
     @Inject(SERVICE_NAME.USER) private readonly userServiceClient: ClientProxy,
   ) {}
 
   @Post()
-  create(@Body() createUserDto: any) {
-    return seh(this.userServiceClient.send('createUser', { createUserDto }));
+  create(@Body() createStudentDto: any) {
+    return seh(
+      this.userServiceClient.send('createStudent', { createStudentDto }),
+    );
   }
 
   @Get()
   findAll() {
-    return seh(this.userServiceClient.send('findAllUsers', {}));
+    return seh(this.userServiceClient.send('findAllStudents', {}));
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return seh(this.userServiceClient.send('findOneUser', { id }));
+    return seh(this.userServiceClient.send('findOneStudent', { id }));
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: any) {
+  update(@Param('id') id: string, @Body() updateStudentDto: any) {
     return seh(
-      this.userServiceClient.send('updateUser', {
-        updateUserDto: {
+      this.userServiceClient.send('updateStudent', {
+        updateStudentDto: {
           id,
-          ...updateUserDto,
+          ...updateStudentDto,
         },
       }),
     );
@@ -47,6 +49,6 @@ export class UsersController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return seh(this.userServiceClient.send('removeUser', { id }));
+    return seh(this.userServiceClient.send('removeStudent', { id }));
   }
 }

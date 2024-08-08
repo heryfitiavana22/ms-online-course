@@ -5,12 +5,13 @@ import { ConfigModule } from '@nestjs/config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { env } from './config/env';
 import { SERVICE_NAME } from './config/service.name';
-import { UsersController } from './users/users.controller';
+import { StudentsController } from './users/students.controller';
 import { CourseController } from './course/course.controller';
 import { EnrollmentController } from './enrollment/enrollment.controller';
 import { AuthController } from './auth/auth.controller';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthenticatedGuard } from './auth/guard/authenticated.guard';
+import { InstructorController } from './users/instructors.controller';
 
 @Module({
   imports: [
@@ -55,10 +56,11 @@ import { AuthenticatedGuard } from './auth/guard/authenticated.guard';
   ],
   controllers: [
     AppController,
-    UsersController,
     CourseController,
     EnrollmentController,
     AuthController,
+    StudentsController,
+    InstructorController,
   ],
   providers: [
     AppService,

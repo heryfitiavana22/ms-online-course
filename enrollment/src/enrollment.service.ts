@@ -10,7 +10,9 @@ import { rcpExpection } from './helpers/rcp-expection';
 
 @Injectable()
 export class EnrollmentService {
-  private enrollments: Enrollment[] = [{ id: '1', courseId: '1', userId: '1' }];
+  private enrollments: Enrollment[] = [
+    { id: '1', courseId: '1', studentId: '1' },
+  ];
 
   getHello(): string {
     return 'Hello from EnrollmentService!';
@@ -19,14 +21,14 @@ export class EnrollmentService {
   create(createEnrollmentDto: CreateEnrollmentDto) {
     const existingEnrollment = this.enrollments.find(
       (enrollment) =>
-        enrollment.userId === createEnrollmentDto.userId &&
+        enrollment.studentId === createEnrollmentDto.studentId &&
         enrollment.courseId === createEnrollmentDto.courseId,
     );
 
     if (existingEnrollment)
       throw rcpExpection(
         new BadRequestException(
-          `Student with id : ${createEnrollmentDto.userId} is already enrolled in this course`,
+          `Student with id : ${createEnrollmentDto.studentId} is already enrolled in this course`,
         ),
       );
 
@@ -48,9 +50,9 @@ export class EnrollmentService {
     );
   }
 
-  findByUserId(userId: string) {
+  findByUserId(studentId: string) {
     return this.enrollments.filter(
-      (enrollment) => enrollment.userId === userId,
+      (enrollment) => enrollment.studentId === studentId,
     );
   }
 
