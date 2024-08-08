@@ -2,7 +2,6 @@ import {
   IsNotEmpty,
   IsString,
   IsNumber,
-  IsInt,
   IsArray,
   IsOptional,
 } from 'class-validator';
@@ -27,4 +26,8 @@ export class Course {
   @IsArray()
   @IsOptional()
   tags?: string[];
+
+  @IsNotEmpty()
+  @IsString()
+  instructorId: string;
 }

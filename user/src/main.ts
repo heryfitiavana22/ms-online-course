@@ -1,13 +1,12 @@
 import { NestFactory } from '@nestjs/core';
-import { UsersModule } from './users.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { env } from './config/env';
-import { ValidationPipe } from '@nestjs/common';
 import { RpcValidationPipe } from './helpers/rpc-validation.pipe';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    UsersModule,
+    AppModule,
     {
       transport: Transport.TCP,
       options: {
@@ -16,7 +15,9 @@ async function bootstrap() {
       },
     },
   );
-  app.useGlobalPipes(new RpcValidationPipe({ transform: true, whitelist: true }));
+  app.useGlobalPipes(
+    new RpcValidationPipe({ transform: true, whitelist: true }),
+  );
   await app.listen();
 }
 bootstrap();

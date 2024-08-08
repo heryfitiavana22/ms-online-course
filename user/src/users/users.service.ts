@@ -2,15 +2,15 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ROLE, User } from './entity/user';
-import { rcpExpection } from './helpers/rcp-expection';
+import { rcpExpection } from '../helpers/rcp-expection';
 
 @Injectable()
 export class UsersService {
   private users: User[] = [
     {
       id: '1',
-      name: 'Hery',
-      email: 'hery@gmail.com',
+      name: 'Bob',
+      email: 'bob@gmail.com',
       password: 'password',
       role: ROLE.ADMIN,
     },

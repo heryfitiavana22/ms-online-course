@@ -7,7 +7,13 @@ import { rcpExpection } from './helpers/rcp-expection';
 @Injectable()
 export class CourseService {
   private courses: Course[] = [
-    { id: '1', title: 'Angular', description: 'Angular course', price: 100 },
+    {
+      id: '1',
+      title: 'Angular',
+      description: 'Angular course',
+      price: 100,
+      instructorId: '1',
+    },
   ];
 
   getHello(): string {
