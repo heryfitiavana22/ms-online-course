@@ -14,7 +14,9 @@ export class EnrollmentController {
   }
 
   @MessagePattern('createEnrollment')
-  create(@Payload() createEnrollmentDto: CreateEnrollmentDto) {
+  create(
+    @Payload('createEnrollmentDto') createEnrollmentDto: CreateEnrollmentDto,
+  ) {
     return this.enrollmentService.create(createEnrollmentDto);
   }
 
@@ -24,22 +26,24 @@ export class EnrollmentController {
   }
 
   @MessagePattern('findOneEnrollment')
-  findOne(@Payload() id: string) {
+  findOne(@Payload('id') id: string) {
     return this.enrollmentService.findOne(id);
   }
 
   @MessagePattern('findEnrollmentsByUserId')
-  findByUserId(@Payload() userId: string) {
+  findByUserId(@Payload('userId') userId: string) {
     return this.enrollmentService.findByUserId(userId);
   }
 
   @MessagePattern('findEnrollmentsByCourseId')
-  findByCourseId(@Payload() courseId: string) {
+  findByCourseId(@Payload('courseId') courseId: string) {
     return this.enrollmentService.findByCourseId(courseId);
   }
 
   @MessagePattern('updateEnrollment')
-  update(@Payload() updateEnrollmentDto: UpdateEnrollmentDto) {
+  update(
+    @Payload('updateEnrollmentDto') updateEnrollmentDto: UpdateEnrollmentDto,
+  ) {
     return this.enrollmentService.update(
       updateEnrollmentDto.id,
       updateEnrollmentDto,
@@ -47,7 +51,7 @@ export class EnrollmentController {
   }
 
   @MessagePattern('removeEnrollment')
-  remove(@Payload() id: string) {
+  remove(@Payload('id') id: string) {
     return this.enrollmentService.remove(id);
   }
 }

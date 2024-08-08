@@ -36,7 +36,9 @@ export class AuthenticatedGuard implements CanActivate {
 
     if (!token) throw new UnauthorizedException('Token missing');
 
-    const user = await this.client.send('validateToken', { token }).toPromise();
+    const user = await this.client
+      .send('validateToken', { tokenData: { token } })
+      .toPromise();
 
     if (!user) throw new UnauthorizedException('Token invalid');
     request.user = user;

@@ -14,7 +14,7 @@ export class UsersController {
   }
 
   @MessagePattern('createUser')
-  create(@Payload() createUserDto: CreateUserDto) {
+  create(@Payload('createUserDto') createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
 
@@ -24,17 +24,17 @@ export class UsersController {
   }
 
   @MessagePattern('findOneUser')
-  findOne(@Payload() id: string) {
+  findOne(@Payload('id') id: string) {
     return this.usersService.findOne(id);
   }
 
   @MessagePattern('updateUser')
-  update(@Payload() updateUserDto: UpdateUserDto) {
+  update(@Payload('updateUserDto') updateUserDto: UpdateUserDto) {
     return this.usersService.update(updateUserDto.id, updateUserDto);
   }
 
   @MessagePattern('removeUser')
-  remove(@Payload() id: string) {
+  remove(@Payload('id') id: string) {
     return this.usersService.remove(id);
   }
 }

@@ -24,16 +24,16 @@ export class EnrollmentController {
 
   @Post()
   async create(@Body() createEnrollmentDto: any) {
+    const { userId, courseId } = createEnrollmentDto;
+
     const user = await lastValueFrom(
-      seh(this.userClient.send('findOneUser', createEnrollmentDto.userId)),
+      seh(this.userClient.send('findOneUser', { id: userId })),
     );
     const course = await lastValueFrom(
-      seh(
-        this.courseClient.send('findOneCourse', createEnrollmentDto.courseId),
-      ),
+      seh(this.courseClient.send('findOneCourse', { id: courseId })),
     );
     return seh(
-      this.enrollmentClient.send('createEnrollment', createEnrollmentDto),
+      this.enrollmentClient.send('createEnrollment', { createEnrollmentDto }),
     );
   }
 
@@ -44,9 +44,9 @@ export class EnrollmentController {
     );
 
     const enrichedEnrollments = await Promise.all(
-      enrollments.map(async (enrollment) => {
+      enrollments.map(async (enrollment: any) => {
         const user = await lastValueFrom(
-          seh(this.userClient.send('findOneUser', enrollment.userId)),
+          seh(this.userClient.send('findOneUser', { id: enrollment.userId })),
         );
         const course = await lastValueFrom(
           seh(
@@ -65,10 +65,12 @@ export class EnrollmentController {
   @Get(':id')
   async findOne(@Param('id') enrollmentId: string) {
     const enrollment = await lastValueFrom(
-      seh(this.enrollmentClient.send('findOneEnrollment', enrollmentId)),
+      seh(
+        this.enrollmentClient.send('findOneEnrollment', { id: enrollmentId }),
+      ),
     );
     const user = await lastValueFrom(
-      seh(this.userClient.send('findOneUser', enrollment.userId)),
+      seh(this.userClient.send('findOneUser', { id: enrollment.userId })),
     );
     const course = await lastValueFrom(
       seh(this.courseClient.send('findOneCourse', { id: enrollment.courseId })),
@@ -78,20 +80,19 @@ export class EnrollmentController {
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateEnrollmentDto: any,
-  ) {
+  update(@Param('id') id: string, @Body() updateEnrollmentDto: any) {
     return seh(
       this.enrollmentClient.send('updateEnrollment', {
-        id,
-        ...updateEnrollmentDto,
+        updateEnrollmentDto: {
+          id,
+          ...updateEnrollmentDto,
+        },
       }),
     );
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return seh(this.enrollmentClient.send('removeEnrollment', id));
+    return seh(this.enrollmentClient.send('removeEnrollment', { id }));
   }
 }

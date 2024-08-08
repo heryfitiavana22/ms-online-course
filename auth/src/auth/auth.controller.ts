@@ -9,12 +9,12 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @MessagePattern('loginAuth')
-  login(@Payload() loginAuthDto: LoginAuthDto) {
+  login(@Payload('loginAuthDto') loginAuthDto: LoginAuthDto) {
     return this.authService.login(loginAuthDto);
   }
 
   @MessagePattern('validateToken')
-  async validateToken(data: ValidateTokenDto) {
-    return this.authService.validateToken(data.token);
+  async validateToken(@Payload('tokenData') tokenData: ValidateTokenDto) {
+    return this.authService.validateToken(tokenData.token);
   }
 }

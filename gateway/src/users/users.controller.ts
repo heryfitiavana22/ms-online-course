@@ -20,7 +20,7 @@ export class UsersController {
 
   @Post()
   create(@Body() createUserDto: any) {
-    return seh(this.userServiceClient.send('createUser', createUserDto));
+    return seh(this.userServiceClient.send('createUser', { createUserDto }));
   }
 
   @Get()
@@ -30,21 +30,23 @@ export class UsersController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return seh(this.userServiceClient.send('findOneUser', id));
+    return seh(this.userServiceClient.send('findOneUser', { id }));
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: any) {
     return seh(
       this.userServiceClient.send('updateUser', {
-        id,
-        ...updateUserDto,
+        updateUserDto: {
+          id,
+          ...updateUserDto,
+        },
       }),
     );
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return seh(this.userServiceClient.send('removeUser', id));
+    return seh(this.userServiceClient.send('removeUser', { id }));
   }
 }
