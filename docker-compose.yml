@@ -7,19 +7,28 @@ services:
     build:
       context: ./gateway
       target: dev
+      args:
+        - PORT=${GATEWAY_PORT}
     ports:
-      - "3000:3000"
+      - "${GATEWAY_PORT}:${GATEWAY_PORT}"
     volumes:
       - ./gateway:/app
     env_file:
       - .env
+    depends_on:
+      - course
+      - enrollment
+      - user
+      - auth
 
   course:
     build:
       context: ./course
       target: dev
+      args:
+        - PORT=${COURSE_SERVICE_PORT}
     ports:
-      - "3001:3001"
+      - "${COURSE_SERVICE_PORT}:${COURSE_SERVICE_PORT}"
     volumes:
       - ./course:/app
     env_file:
@@ -29,8 +38,10 @@ services:
     build:
       context: ./enrollment
       target: dev
+      args:
+        - PORT=${ENROLLMENT_SERVICE_PORT}
     ports:
-      - "3002:3002"
+      - "${ENROLLMENT_SERVICE_PORT}:${ENROLLMENT_SERVICE_PORT}"
     volumes:
       - ./enrollment:/app
     env_file:
@@ -40,8 +51,10 @@ services:
     build:
       context: ./user
       target: dev
+      args:
+        - PORT=${USER_SERVICE_PORT}
     ports:
-      - "3003:3003"
+      - "${USER_SERVICE_PORT}:${USER_SERVICE_PORT}"
     volumes:
       - ./user:/app
     env_file:
@@ -51,8 +64,10 @@ services:
     build:
       context: ./auth
       target: dev
+      args:
+        - PORT=${AUTH_SERVICE_PORT}
     ports:
-      - "3004:3004"
+      - "${AUTH_SERVICE_PORT}:${AUTH_SERVICE_PORT}"
     volumes:
       - ./auth:/app
     env_file:
