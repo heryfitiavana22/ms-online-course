@@ -36,7 +36,7 @@ ms-online-course/
 │   ├── apps/  
 │   │   ├── admin/                
 │   │   ├── instructor/   
-│   │   ├── students/   
+│   │   ├── client/   
 │   ├── packages/  
 │   │   ├── data-type/                
 │   │   ├── repository/   
@@ -52,6 +52,7 @@ ms-online-course/
     * Next.js
     * shadcn/ui
     * Tailwind
+    * turborepo
 * **Backend:**
     * NestJS
     * Docker
