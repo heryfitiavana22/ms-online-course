@@ -1,12 +1,24 @@
-import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Eye, FilePen, Trash } from "ui";
+import {
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  Eye,
+  FilePen,
+  Trash,
+} from "ui";
 import { Course } from "data-type";
-
 
 export function CardCourse({ course }: CardCourseProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{course.title}</CardTitle>
+        <CardTitle className="flex gap-3 items-center justify-between">
+          <span>{course.title}</span>
+          <span className="text-muted-foreground text-sm">${course.price}</span>
+        </CardTitle>
         <CardDescription>{course.description}</CardDescription>
       </CardHeader>
       <CardContent>

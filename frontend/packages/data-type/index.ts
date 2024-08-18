@@ -4,10 +4,14 @@ export type Course = {
   description: string;
   price: number;
   tags?: string[];
-  user: User;
+  instructorId: string;
+  instructor?: Instructor;
 };
 
-export type User = {
+export interface User {
   name: string;
+}
+
+export interface Instructor extends User {
   lessonsCount?: number;
-};
+}

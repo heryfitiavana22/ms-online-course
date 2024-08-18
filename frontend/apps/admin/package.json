@@ -14,7 +14,8 @@
     "react": "^18",
     "react-dom": "^18",
     "tailwindcss-animate": "^1.0.7",
-    "ui": "workspace:*"
+    "ui": "workspace:*",
+    "repository": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20",
