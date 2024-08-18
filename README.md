@@ -4,6 +4,13 @@ This is a `microservices`-based online course platform developed using TypeScrip
 
 > This project is a POC and is under development.
 
+## Demo
+
+
+https://github.com/user-attachments/assets/68d89071-1741-4dd2-a25e-e821c51a7e8a
+
+
+
 ## Features
 
 - **User**: authentification, role-based access control (student, instructor, admin).
